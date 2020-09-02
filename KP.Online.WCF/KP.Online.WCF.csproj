@@ -84,7 +84,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KP.OrderMGT.BL\KP.Online.BL.csproj">
+    <ProjectReference Include="..\KP.Online.BL\KP.Online.BL.csproj">
       <Project>{35f8f705-5794-4f2d-ab60-e8872ca40120}</Project>
       <Name>KP.Online.BL</Name>
     </ProjectReference>
