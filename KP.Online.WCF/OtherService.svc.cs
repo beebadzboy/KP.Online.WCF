@@ -81,12 +81,12 @@ namespace KP.Online.WCF
         public async Task<List<SaleQueue>> SaleQueueOnlineAsync(string airport_code, char terminal)
         {
             List<SaleQueue> ret = new List<SaleQueue>();
-            var omSrv = new OrderService();
-            var posConn = omSrv.GetConnectionPOSAirport(airport_code);
+            OrderService srv = new OrderService();
+            var posConn = srv.GetConnectionPOSAirport(airport_code);
             if (posConn != null)
             {
                 var posDB = new POSAirPortClassesDataContext(posConn);
-                ret = omSrv.SaleQueue(posDB, terminal);
+                ret = srv.SaleQueue(posDB, terminal);
             }
             return await Task.FromResult(ret);
         }

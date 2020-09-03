@@ -18,6 +18,12 @@ namespace KP.Online.Service
         private OrderDataClassesDataContext _omDB;
         private POSAirPortClassesDataContext _posDB;
         public OrderService() { }
+        public OrderService(string connStr)
+        { _omDB = new OrderDataClassesDataContext(connStr); }
+        public OrderService(string connPOS, ref POSAirPortClassesDataContext posDB)
+        {
+            posDB = new POSAirPortClassesDataContext(connPOS); 
+        }
         public OrderService(OrderDataClassesDataContext omDB)
         { _omDB = omDB; }
         public OrderService(POSAirPortClassesDataContext posDB)
@@ -560,7 +566,7 @@ namespace KP.Online.Service
             new_order_header.flight_code = order.Flight.FlightCode;
             new_order_header.flight_no = order.Flight.FlightCode;
             //new_order_header.flight_
-            new_order_header.reference_1 = "";
+            new_order_header.reference_1 = order.Billing.BillAddress1;
             new_order_header.reference_2 = "";
             new_order_header.reference_3 = "";
             new_order_header.remark = "";
@@ -669,6 +675,13 @@ namespace KP.Online.Service
                 throw new ObjectNotFoundException(order_no + " : data not found.");
             }
 
+            // ไม่เท่ากับ save ไม่ให้ทำต่อ
+            string[] order_status = new string[] { "002", "003" };
+            if (!order_status.Contains(pos_data.LastStatus.Trim()))
+            {
+                throw new ObjectNotFoundException(pos_data.OnlineNo + " : The last state was not 'Created'(002) or 'Saved'(003), so could not be Cancel ordered..");
+            }
+
             int status = (int)StatusOrderPOS.CancelCreated;
             pos_data.LastStatus = status.ToString("0000");
             pos_data.update_datetime = DateTime.Now;
@@ -695,6 +708,12 @@ namespace KP.Online.Service
                 throw new ObjectNotFoundException(order_no + " : data not found.");
             }
 
+            // ไม่เท่ากับ save ไม่ให้ทำต่อ
+            if (pos_data.LastStatus != "002")
+            {
+                throw new ObjectNotFoundException(pos_data.OnlineNo + " : The last state was not 'Created'(002), so could not be Hole ordered..");
+            }
+
             int status = (int)StatusOrderPOS.HoldOrder;
             pos_data.LastStatus = status.ToString("0000");
             pos_data.update_datetime = DateTime.Now;
@@ -719,6 +738,12 @@ namespace KP.Online.Service
             if (pos_data == null)
             {
                 throw new ObjectNotFoundException(order_no + " : data not found.");
+            }
+
+            // ไม่เท่ากับ save ไม่ให้ทำต่อ
+            if (pos_data.LastStatus != "003")
+            {
+                throw new ObjectNotFoundException(pos_data.OnlineNo + " : The last state was not 'Saved'(003), so could not be Cancel ordered...");
             }
 
             int status = (int)StatusOrderPOS.RefundComplete;

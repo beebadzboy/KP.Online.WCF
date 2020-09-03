@@ -10,7 +10,7 @@ using KP.Online.BL.ServiceModel;
 
 namespace KP.Online.WCF
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IFlightWCF" in both code and config file together.
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IOtherService" in both code and config file together.
     [ServiceContract]
     public interface IOtherService
     {
