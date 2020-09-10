@@ -56,12 +56,6 @@ namespace KP.Online.BL.DBModel
     partial void Deleteuser_master(user_master instance);
     #endregion
 		
-		public OrderDataClassesDataContext() : 
-				base(global::KP.Online.BL.Properties.Settings.Default.KPOrderConnectionString, mappingSource)
-		{
-			OnCreated();
-		}
-		
 		public OrderDataClassesDataContext(string connection) : 
 				base(connection, mappingSource)
 		{

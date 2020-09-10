@@ -36,7 +36,7 @@ namespace KP.Online.Service
             var connObj = _omDB.config_connections.FirstOrDefault(x => x.cn_code == airport_code);
             if (connObj == null)
             {
-                throw new System.ArgumentException("message", nameof(connObj));
+                throw new System.ArgumentException("connection error", nameof(airport_code));
             }
 
             var connectionString = "Data Source=" + connObj.cn_server.Trim() + ";Initial Catalog=" + connObj.cn_database.Trim() + ";Persist Security Info=True;User ID=" + connObj.cn_uid.Trim() + ";Password=" + connObj.cn_pwd.Trim() + ";";
@@ -772,7 +772,7 @@ namespace KP.Online.Service
                 throw new ObjectNotFoundException(order_no + " : data not found.");
             }
 
-            int status = (int)StatusOrderPOS.RefundComplete;
+            int status = (int)StatusOrderPOS.Complete;
             pos_data.LastStatus = status.ToString("000");
             pos_data.update_datetime = DateTime.Now;
             pos_data.user_update = "online";

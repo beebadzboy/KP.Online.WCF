@@ -23,19 +23,19 @@ namespace KP.Online.WCF
         public async Task<OrderSession> CancelOrderOnlineAsync(string order_no)
         {
             OrderService orderSrv = new OrderService(_connStr);
-            string connPOS = orderSrv.GetConnectionPOSAirport(order_no);
-            OrderService srv = new OrderService(connPOS, ref _posDB);
+            string connStrPOS = orderSrv.GetConnectionPOSOrder(order_no);
+            _posDB = new POSAirPortClassesDataContext(connStrPOS);
 
-            return await Task.FromResult(srv.CancelOrderOnline(_posDB, order_no));
+            return await Task.FromResult(orderSrv.CancelOrderOnline(_posDB, order_no));
         }
 
         public async Task<OrderSession> CompleteOrderOnlineAsync(string order_no)
         {
             OrderService orderSrv = new OrderService(_connStr);
-            string connPOS = orderSrv.GetConnectionPOSAirport(order_no);
-            OrderService srv = new OrderService(connPOS, ref _posDB);
+            string connStrPOS = orderSrv.GetConnectionPOSOrder(order_no);
+            _posDB = new POSAirPortClassesDataContext(connStrPOS);
 
-            return await Task.FromResult(srv.CancelOrderOnline(_posDB, order_no));
+            return await Task.FromResult(orderSrv.CompleteOrderOnline(_posDB, order_no));
         }
 
         public async Task<OrderSession> GetOrderOnlineAsync(string order_no)
@@ -54,19 +54,19 @@ namespace KP.Online.WCF
         public async Task<OrderSession> HoleOrderOnlineAsync(string order_no)
         {
             OrderService orderSrv = new OrderService(_connStr);
-            string connPOS = orderSrv.GetConnectionPOSAirport(order_no);
-            OrderService srv = new OrderService(connPOS, ref _posDB);
+            string connPOS = orderSrv.GetConnectionPOSOrder(order_no);
+            _posDB = new POSAirPortClassesDataContext(connPOS);
 
-            return await Task.FromResult(srv.HoleOrderOnline(_posDB, order_no));
+            return await Task.FromResult(orderSrv.HoleOrderOnline(_posDB, order_no));
         }
 
         public async Task<OrderSession> SaveOrderOnlineAsync(OrderHeader order)
         {
             OrderService orderSrv = new OrderService(_connStr);
-            string connPOS = orderSrv.GetConnectionPOSAirport(order.Flight.AirportCode);
-            OrderService srv = new OrderService(connPOS, ref _posDB);
+            string connStrPOS = orderSrv.GetConnectionPOSAirport(order.Flight.AirportCode);
+            _posDB = new POSAirPortClassesDataContext(connStrPOS);
 
-            return await Task.FromResult(srv.SaveOrderOnline(_posDB, order));
+            return await Task.FromResult(orderSrv.SaveOrderOnline(_posDB, order));
         }
 
         public async Task<OrderSession> UpdateStatusOrderOnlineAsync(string order_no, string status)
@@ -92,10 +92,10 @@ namespace KP.Online.WCF
         public async Task<OrderSession> VoidOrderOnlineAsync(string order_no)
         {
             OrderService orderSrv = new OrderService(_connStr);
-            string connPOS = orderSrv.GetConnectionPOSAirport(order_no);
-            OrderService srv = new OrderService(connPOS, ref _posDB);
+            string connPOS = orderSrv.GetConnectionPOSOrder(order_no);
+            _posDB = new POSAirPortClassesDataContext(connPOS);
 
-            return await Task.FromResult(srv.VoidOrderOnline(_posDB, order_no));
+            return await Task.FromResult(orderSrv.VoidOrderOnline(_posDB, order_no));
         }
     }
 }

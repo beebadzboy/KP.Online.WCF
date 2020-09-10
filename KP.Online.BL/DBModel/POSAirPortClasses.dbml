@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="NDCCSVB_Train" Class="POSAirPortClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=172.17.0.3;Initial Catalog=NDCCSVB_Train;Persist Security Info=True;User ID=sa" SettingsObjectName="KP.Online.BL.Properties.Settings" SettingsPropertyName="NDCCSVB_TrainConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.df_payment_onl" Member="df_payment_onls">
     <Type Name="df_payment_onl">
       <Column Name="branch_no" Type="System.String" DbType="Char(2) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />

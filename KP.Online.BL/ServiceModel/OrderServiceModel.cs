@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel;
 
 namespace KP.Online.BL.ServiceModel
 {
@@ -12,11 +13,17 @@ namespace KP.Online.BL.ServiceModel
     [DataContract]
     public enum StatusOrderPOS
     {
+        [EnumMember]
         Created = 002,
+        [EnumMember]
         HoldOrder = 0025,
+        [EnumMember]
         CancelCreated = 0021,
+        [EnumMember]
         RefundComplete = 103,
+        [EnumMember]
         Saved = 003,
+        [EnumMember]
         Complete = 006
     }
 

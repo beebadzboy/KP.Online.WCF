@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,15 +17,19 @@ namespace KP.Online.WCF
     {
         // TODO: Add your service operations here
         [OperationContract]
+        //[WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         Task<SaleAmountByPassport> ValidateAllowSaleOnlineAsync(string airport_code, string passort, DateTime flight_date, string flight_code);
 
         [OperationContract]
+        //[WebInvoke(RequestFormat = WebMessageFormat.Json,ResponseFormat = WebMessageFormat.Json)]
         Task<OrderSession> SaveOrderOnlineAsync(OrderHeader order);
 
         [OperationContract]
+        //[WebInvoke(ResponseFormat = WebMessageFormat.Json)]
         Task<OrderSession> HoleOrderOnlineAsync(string order);
 
         [OperationContract]
+        //[WebInvoke(ResponseFormat = WebMessageFormat.Json)]
         Task<OrderSession> CancelOrderOnlineAsync(string order_no);
 
         [OperationContract]

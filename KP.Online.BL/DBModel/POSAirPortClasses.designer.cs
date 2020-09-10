@@ -53,12 +53,6 @@ namespace KP.Online.BL.DBModel
     partial void Deletedf_machine(df_machine instance);
     #endregion
 		
-		public POSAirPortClassesDataContext() : 
-				base(global::KP.Online.BL.Properties.Settings.Default.NDCCSVB_TrainConnectionString, mappingSource)
-		{
-			OnCreated();
-		}
-		
 		public POSAirPortClassesDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
