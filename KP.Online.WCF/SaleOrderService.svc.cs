@@ -4,11 +4,16 @@ using KP.Online.Service;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
+using Newtonsoft;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.ServiceModel;
+using System.ServiceModel.Description;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace KP.Online.WCF
 {
@@ -60,6 +65,17 @@ namespace KP.Online.WCF
             return await Task.FromResult(orderSrv.HoleOrderOnline(_posDB, order_no));
         }
 
+        public async Task<OrderSession> SaveOrderOnlineJsonAsync(string orderJson)
+        {
+            OrderService orderSrv = new OrderService(_connStr);
+            var order = JsonConvert.DeserializeObject<OrderHeader>(orderJson);
+            string connStrPOS = orderSrv.GetConnectionPOSAirport(order.Flight.AirportCode);
+            _posDB = new POSAirPortClassesDataContext(connStrPOS);
+
+            return await Task.FromResult(orderSrv.SaveOrderOnline(_posDB, order));
+        }
+
+
         public async Task<OrderSession> SaveOrderOnlineAsync(OrderHeader order)
         {
             OrderService orderSrv = new OrderService(_connStr);
@@ -75,8 +91,10 @@ namespace KP.Online.WCF
             return await Task.FromResult(orderSrv.UpdateStatusOrderOnline(order_no, status));
         }
 
-        public async Task<SaleAmountByPassport> ValidateAllowSaleOnlineAsync(string airport_code, string passort, DateTime flight_date, string flight_code)
+        public async Task<SaleAmountByPassport> ValidateAllowSaleOnlineAsync(string airport_code, string passort, string dateString, string flight_code)
         {
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            var flight_date = DateTime.ParseExact(dateString, "yyyy-MM-dd", provider);
             OrderService orderSrv = new OrderService(_connStr);
             string connPOS = orderSrv.GetConnectionPOSAirport(airport_code);
             POSAirPortClassesDataContext _posDB = new POSAirPortClassesDataContext(connPOS);

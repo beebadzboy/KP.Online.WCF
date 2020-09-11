@@ -17,19 +17,21 @@ namespace KP.Online.WCF
     {
         // TODO: Add your service operations here
         [OperationContract]
-        //[WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        Task<SaleAmountByPassport> ValidateAllowSaleOnlineAsync(string airport_code, string passort, DateTime flight_date, string flight_code);
+        Task<SaleAmountByPassport> ValidateAllowSaleOnlineAsync(string airport_code, string passort, string dateString, string flight_code);
 
         [OperationContract]
-        //[WebInvoke(RequestFormat = WebMessageFormat.Json,ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(RequestFormat = WebMessageFormat.Json)]
         Task<OrderSession> SaveOrderOnlineAsync(OrderHeader order);
 
         [OperationContract]
-        //[WebInvoke(ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(RequestFormat = WebMessageFormat.Json)]
+        Task<OrderSession> SaveOrderOnlineJsonAsync(string orderJson);
+
+        [OperationContract]
         Task<OrderSession> HoleOrderOnlineAsync(string order);
 
         [OperationContract]
-        //[WebInvoke(ResponseFormat = WebMessageFormat.Json)]
+        [WebInvoke(ResponseFormat = WebMessageFormat.Json)]
         Task<OrderSession> CancelOrderOnlineAsync(string order_no);
 
         [OperationContract]
