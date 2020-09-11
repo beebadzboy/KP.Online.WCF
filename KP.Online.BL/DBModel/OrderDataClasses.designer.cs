@@ -3189,7 +3189,7 @@ namespace KP.Online.BL.DBModel
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_paymemt_amt", DbType="Decimal(18,0)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_paymemt_amt", DbType="Decimal(18,2)")]
 		public System.Nullable<decimal> paymemt_amt
 		{
 			get

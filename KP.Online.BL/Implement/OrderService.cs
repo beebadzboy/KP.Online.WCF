@@ -133,37 +133,37 @@ namespace KP.Online.Service
             var connObj = _omDB.config_connections.FirstOrDefault(x => x.cn_code.Trim() == order.Flight.AirportCode.Trim());
             if (connObj == null)
             {
-                throw new ArgumentException("object not found.", nameof(order.Flight.AirportCode));
+                throw new ArgumentException("object not found.", order.Flight.AirportCode);
             }
 
             var order_flight = _omDB.df_flights.FirstOrDefault(x => x.flight_code.Trim() == order.Flight.FlightCode.Trim());
             if (order_flight == null)
             {
-                throw new ArgumentException("object not found.", nameof(order.Flight.FlightCode));
+                throw new ArgumentException("object not found.", order.Flight.FlightCode);
             }
 
             var last_number = _posDB.runno_machines.FirstOrDefault(x => x.machine_no.Trim() == connObj.ref_machine_no.Trim());
             if (last_number == null)
             {
-                throw new ArgumentException("machine no is not running no.", nameof(last_number));
+                throw new ArgumentException("machine no is not running no.", last_number.ToString());
             }
 
             var order_header = _posDB.df_header_onls.FirstOrDefault(x => x.OnlineNo.Trim() == order.NewOrder.OrderNo.Trim());
             if (order_header != null)
             {
-                throw new ArgumentException("order is duplicate.", nameof(order_header.OnlineNo));
+                throw new ArgumentException("order is duplicate.", order_header.OnlineNo);
             }
 
             if (string.IsNullOrWhiteSpace(order.Billing.PassportNo))
             {
-                throw new ArgumentException("data is missing.", nameof(order.Billing.PassportNo));
+                throw new ArgumentException("data is missing.", order.Billing.PassportNo);
             }
 
             string[] order_kpd = new string[] { "2", "3" };
             var order_digit = order.NewOrder.OrderNo.Substring(order.NewOrder.OrderNo.Length - 1, 1);
             if (!order_kpd.Contains(order_digit))
             {
-                throw new ArgumentException("order no is not kpd.", nameof(order_header.OnlineNo));
+                throw new ArgumentException("order no is not kpd.", order_header.OnlineNo);
             }
 
             order.Items.ForEach(delegate (ItemSKU itemSKU){
@@ -332,15 +332,18 @@ namespace KP.Online.Service
                     _posDB.df_header_onls.InsertOnSubmit(new_order);
 
                     // new df_tran_onl and new pdiscount_onl
-                    var item_code_list = order.Items.Select(x => string.Format("{0:000000000000000000}", x.MaterialCode)).ToList();
+
+                    var item_code_list = order.Items.Select(x => Convert.ToInt32(x.MaterialCode).ToString("000000000000000000")).ToList();
                     var master_article = _posDB.vArticleMCs.Where(x => item_code_list.Contains(x.ArticleCode)).ToList();
                     var line_disc_no = 0;
                     foreach (var item in order.Items.Select((value, index) => new { Value = value, Index = index }))
                     {
-                        var item_code = master_article.FirstOrDefault(x => x.ArticleCode == string.Format("{0:000000000000000000}", item.Value.MaterialCode));
+                        var material_code = Convert.ToInt32(item.Value.MaterialCode);
+                        var item_code = master_article.FirstOrDefault(x => x.ArticleCode == material_code.ToString("000000000000000000"));
                         if (item_code == null)
                         {
-                            throw new ArgumentException("[material code] data not found.", nameof(item.Value.MaterialCode));
+                   
+                            throw new ArgumentException("[material code] data not found.", material_code.ToString("000000000000000000"));
                         }
 
                         df_trans_onl new_item = new df_trans_onl() {
@@ -364,7 +367,7 @@ namespace KP.Online.Service
                             vat_code = "2", // 0 = no vat , 1 = vat , 2 = zero vat
                             vat_rate = 0,
                             //disc_rate = item.Value.DiscountRate,
-                            disc_rate = decimal.Round((item.Value.TotalDiscount / item.Value.Amount) * 100, 2),
+                            disc_rate = item.Value.Amount == 0 ? 0 : decimal.Round((item.Value.TotalDiscount / item.Value.Amount) * 100, 2),
                             disc_code = item.Value.PromoCode,
                             promo_code = item.Value.SPPromoCode,
                             staff_code = new_order.sale_code,
