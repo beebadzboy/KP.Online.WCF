@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\OM_WCF.pubxml" />
     <None Include="Properties\PublishProfiles\Other API 10.3.0.121.pubxml" />
     <None Include="Properties\PublishProfiles\ServiceLocal.pubxml" />
     <None Include="Properties\PublishProfiles\WCF 10.3.0.121.pubxml" />

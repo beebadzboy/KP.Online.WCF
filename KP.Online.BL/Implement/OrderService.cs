@@ -744,10 +744,16 @@ namespace KP.Online.Service
             }
 
             // ไม่เท่ากับ save ไม่ให้ทำต่อ
-            if (pos_data.LastStatus != "003")
+            //if (pos_data.LastStatus != "003")
+            //{
+            //    throw new ObjectNotFoundException(pos_data.OnlineNo + " : The last state was not 'Saved'(003), so could not be Cancel ordered...");
+            //}
+            string[] order_status = new string[] { "003", "006" };
+            if (!order_status.Contains(pos_data.LastStatus.Trim()))
             {
-                throw new ObjectNotFoundException(pos_data.OnlineNo + " : The last state was not 'Saved'(003), so could not be Cancel ordered...");
+                throw new ObjectNotFoundException(pos_data.OnlineNo + " :  'The last state was not 'Saved'(003) or 'Complete'(006) so could not be Refund ordered..");
             }
+
 
             int status = (int)StatusOrderPOS.RefundComplete;
             pos_data.LastStatus = status.ToString("000");
