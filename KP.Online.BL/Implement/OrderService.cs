@@ -748,7 +748,7 @@ namespace KP.Online.Service
             //{
             //    throw new ObjectNotFoundException(pos_data.OnlineNo + " : The last state was not 'Saved'(003), so could not be Cancel ordered...");
             //}
-            string[] order_status = new string[] { "003", "006" };
+            string[] order_status = new string[] { "003", "006", "103" };
             if (!order_status.Contains(pos_data.LastStatus.Trim()))
             {
                 throw new ObjectNotFoundException(pos_data.OnlineNo + " :  'The last state was not 'Saved'(003) or 'Complete'(006) so could not be Refund ordered..");
