@@ -81,7 +81,7 @@ namespace KP.Online.WCF
         public async Task<List<SaleQueue>> SaleQueueOnlineAsync(string airport_code, char terminal)
         {
             List<SaleQueue> ret = new List<SaleQueue>();
-            OrderService srv = new OrderService();
+            OrderService srv = new OrderService(_connStr);
             var posConn = srv.GetConnectionPOSAirport(airport_code);
             if (posConn != null)
             {

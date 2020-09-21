@@ -653,7 +653,7 @@ namespace KP.Online.Service
         {
             string[] status = new string[] { "002","003" };
             var saleList = new List<SaleQueue>();
-            var saleObj = _posDB.df_trans_onls.Where(y => y.cancel_status != true && y.df_header_onl.TerminalCode == terminal.ToString() && status.Contains(y.df_header_onl.LastStatus)).GroupBy(p => p.item_code, (key, g) => new { SKU = key, ListData = g.ToList() }).ToList();
+            var saleObj = _posDB.df_trans_onls.Where(y => y.cancel_status != true && y.df_header_onl.TerminalCode == terminal.ToString() && status.Contains(y.df_header_onl.LastStatus)).GroupBy(p => p.mat_code, (key, g) => new { SKU = key, ListData = g.ToList() }).ToList();
             foreach (var sale in saleObj)
             {
                 var newSale = new SaleQueue(sale.SKU, sale.ListData);
