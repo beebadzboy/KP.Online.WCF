@@ -202,10 +202,10 @@ namespace KP.Online.Service
                 {
                     throw new ArgumentException("object not found [SPDiscountPer has value and  SPDiscountRate not vaule].");
                 }
-                else if (string.IsNullOrWhiteSpace(itemSKU.SPPromoCode) && (sp_dis_per + sp_dis_amt) < 0)
-                {
-                    throw new ArgumentException("object not found [SPPromoCode missing].");
-                }
+                //else if (string.IsNullOrWhiteSpace(itemSKU.SPPromoCode) && (sp_dis_per + sp_dis_amt) < 0)
+                //{
+                //    throw new ArgumentException("object not found [SPPromoCode missing].");
+                //}
 
                 decimal cal_total_dis = dis_per + dis_amt + sp_dis_per + sp_dis_amt;
                 if (cal_total_dis != itemSKU.TotalDiscount)
