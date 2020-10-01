@@ -51,7 +51,16 @@ namespace KP.Online.BL.DBModel
     partial void Insertdf_machine(df_machine instance);
     partial void Updatedf_machine(df_machine instance);
     partial void Deletedf_machine(df_machine instance);
+    partial void InsertContactData(ContactData instance);
+    partial void UpdateContactData(ContactData instance);
+    partial void DeleteContactData(ContactData instance);
     #endregion
+		
+		public POSAirPortClassesDataContext() : 
+				base(global::KP.Online.BL.Properties.Settings.Default.NDCCSVB_TrainConnectionString, mappingSource)
+		{
+			OnCreated();
+		}
 		
 		public POSAirPortClassesDataContext(string connection) : 
 				base(connection, mappingSource)
@@ -138,6 +147,14 @@ namespace KP.Online.BL.DBModel
 			get
 			{
 				return this.GetTable<df_machine>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ContactData> ContactDatas
+		{
+			get
+			{
+				return this.GetTable<ContactData>();
 			}
 		}
 		
@@ -6579,6 +6596,404 @@ namespace KP.Online.BL.DBModel
 					this._SignPad = value;
 					this.SendPropertyChanged("SignPad");
 					this.OnSignPadChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ContactData")]
+	public partial class ContactData : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _ContactDataKey;
+		
+		private string _KeySearch;
+		
+		private string _CustName;
+		
+		private string _PassportNo;
+		
+		private System.DateTime _OrderDate;
+		
+		private string _Nation;
+		
+		private string _FlightCode;
+		
+		private System.DateTime _FlightDT;
+		
+		private string _PhoneNo;
+		
+		private char _SaleStatus;
+		
+		private bool _IsCanceled;
+		
+		private System.DateTime _AddDT;
+		
+		private System.Nullable<System.DateTime> _SendSmsDT;
+		
+		private string _BulkId;
+		
+		private string _MessageId;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnContactDataKeyChanging(long value);
+    partial void OnContactDataKeyChanged();
+    partial void OnKeySearchChanging(string value);
+    partial void OnKeySearchChanged();
+    partial void OnCustNameChanging(string value);
+    partial void OnCustNameChanged();
+    partial void OnPassportNoChanging(string value);
+    partial void OnPassportNoChanged();
+    partial void OnOrderDateChanging(System.DateTime value);
+    partial void OnOrderDateChanged();
+    partial void OnNationChanging(string value);
+    partial void OnNationChanged();
+    partial void OnFlightCodeChanging(string value);
+    partial void OnFlightCodeChanged();
+    partial void OnFlightDTChanging(System.DateTime value);
+    partial void OnFlightDTChanged();
+    partial void OnPhoneNoChanging(string value);
+    partial void OnPhoneNoChanged();
+    partial void OnSaleStatusChanging(char value);
+    partial void OnSaleStatusChanged();
+    partial void OnIsCanceledChanging(bool value);
+    partial void OnIsCanceledChanged();
+    partial void OnAddDTChanging(System.DateTime value);
+    partial void OnAddDTChanged();
+    partial void OnSendSmsDTChanging(System.Nullable<System.DateTime> value);
+    partial void OnSendSmsDTChanged();
+    partial void OnBulkIdChanging(string value);
+    partial void OnBulkIdChanged();
+    partial void OnMessageIdChanging(string value);
+    partial void OnMessageIdChanged();
+    #endregion
+		
+		public ContactData()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ContactDataKey", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long ContactDataKey
+		{
+			get
+			{
+				return this._ContactDataKey;
+			}
+			set
+			{
+				if ((this._ContactDataKey != value))
+				{
+					this.OnContactDataKeyChanging(value);
+					this.SendPropertyChanging();
+					this._ContactDataKey = value;
+					this.SendPropertyChanged("ContactDataKey");
+					this.OnContactDataKeyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_KeySearch", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string KeySearch
+		{
+			get
+			{
+				return this._KeySearch;
+			}
+			set
+			{
+				if ((this._KeySearch != value))
+				{
+					this.OnKeySearchChanging(value);
+					this.SendPropertyChanging();
+					this._KeySearch = value;
+					this.SendPropertyChanged("KeySearch");
+					this.OnKeySearchChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustName", DbType="Char(40) NOT NULL", CanBeNull=false)]
+		public string CustName
+		{
+			get
+			{
+				return this._CustName;
+			}
+			set
+			{
+				if ((this._CustName != value))
+				{
+					this.OnCustNameChanging(value);
+					this.SendPropertyChanging();
+					this._CustName = value;
+					this.SendPropertyChanged("CustName");
+					this.OnCustNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PassportNo", DbType="Char(20) NOT NULL", CanBeNull=false)]
+		public string PassportNo
+		{
+			get
+			{
+				return this._PassportNo;
+			}
+			set
+			{
+				if ((this._PassportNo != value))
+				{
+					this.OnPassportNoChanging(value);
+					this.SendPropertyChanging();
+					this._PassportNo = value;
+					this.SendPropertyChanged("PassportNo");
+					this.OnPassportNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderDate", DbType="SmallDateTime NOT NULL")]
+		public System.DateTime OrderDate
+		{
+			get
+			{
+				return this._OrderDate;
+			}
+			set
+			{
+				if ((this._OrderDate != value))
+				{
+					this.OnOrderDateChanging(value);
+					this.SendPropertyChanging();
+					this._OrderDate = value;
+					this.SendPropertyChanged("OrderDate");
+					this.OnOrderDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nation", DbType="Char(10) NOT NULL", CanBeNull=false)]
+		public string Nation
+		{
+			get
+			{
+				return this._Nation;
+			}
+			set
+			{
+				if ((this._Nation != value))
+				{
+					this.OnNationChanging(value);
+					this.SendPropertyChanging();
+					this._Nation = value;
+					this.SendPropertyChanged("Nation");
+					this.OnNationChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FlightCode", DbType="Char(10) NOT NULL", CanBeNull=false)]
+		public string FlightCode
+		{
+			get
+			{
+				return this._FlightCode;
+			}
+			set
+			{
+				if ((this._FlightCode != value))
+				{
+					this.OnFlightCodeChanging(value);
+					this.SendPropertyChanging();
+					this._FlightCode = value;
+					this.SendPropertyChanged("FlightCode");
+					this.OnFlightCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FlightDT", DbType="DateTime NOT NULL")]
+		public System.DateTime FlightDT
+		{
+			get
+			{
+				return this._FlightDT;
+			}
+			set
+			{
+				if ((this._FlightDT != value))
+				{
+					this.OnFlightDTChanging(value);
+					this.SendPropertyChanging();
+					this._FlightDT = value;
+					this.SendPropertyChanged("FlightDT");
+					this.OnFlightDTChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneNo", DbType="Char(15) NOT NULL", CanBeNull=false)]
+		public string PhoneNo
+		{
+			get
+			{
+				return this._PhoneNo;
+			}
+			set
+			{
+				if ((this._PhoneNo != value))
+				{
+					this.OnPhoneNoChanging(value);
+					this.SendPropertyChanging();
+					this._PhoneNo = value;
+					this.SendPropertyChanged("PhoneNo");
+					this.OnPhoneNoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SaleStatus", DbType="Char(1) NOT NULL")]
+		public char SaleStatus
+		{
+			get
+			{
+				return this._SaleStatus;
+			}
+			set
+			{
+				if ((this._SaleStatus != value))
+				{
+					this.OnSaleStatusChanging(value);
+					this.SendPropertyChanging();
+					this._SaleStatus = value;
+					this.SendPropertyChanged("SaleStatus");
+					this.OnSaleStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsCanceled", DbType="Bit NOT NULL")]
+		public bool IsCanceled
+		{
+			get
+			{
+				return this._IsCanceled;
+			}
+			set
+			{
+				if ((this._IsCanceled != value))
+				{
+					this.OnIsCanceledChanging(value);
+					this.SendPropertyChanging();
+					this._IsCanceled = value;
+					this.SendPropertyChanged("IsCanceled");
+					this.OnIsCanceledChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddDT", DbType="SmallDateTime NOT NULL")]
+		public System.DateTime AddDT
+		{
+			get
+			{
+				return this._AddDT;
+			}
+			set
+			{
+				if ((this._AddDT != value))
+				{
+					this.OnAddDTChanging(value);
+					this.SendPropertyChanging();
+					this._AddDT = value;
+					this.SendPropertyChanged("AddDT");
+					this.OnAddDTChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SendSmsDT", DbType="DateTime")]
+		public System.Nullable<System.DateTime> SendSmsDT
+		{
+			get
+			{
+				return this._SendSmsDT;
+			}
+			set
+			{
+				if ((this._SendSmsDT != value))
+				{
+					this.OnSendSmsDTChanging(value);
+					this.SendPropertyChanging();
+					this._SendSmsDT = value;
+					this.SendPropertyChanged("SendSmsDT");
+					this.OnSendSmsDTChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BulkId", DbType="NVarChar(100)")]
+		public string BulkId
+		{
+			get
+			{
+				return this._BulkId;
+			}
+			set
+			{
+				if ((this._BulkId != value))
+				{
+					this.OnBulkIdChanging(value);
+					this.SendPropertyChanging();
+					this._BulkId = value;
+					this.SendPropertyChanged("BulkId");
+					this.OnBulkIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MessageId", DbType="NVarChar(100)")]
+		public string MessageId
+		{
+			get
+			{
+				return this._MessageId;
+			}
+			set
+			{
+				if ((this._MessageId != value))
+				{
+					this.OnMessageIdChanging(value);
+					this.SendPropertyChanging();
+					this._MessageId = value;
+					this.SendPropertyChanged("MessageId");
+					this.OnMessageIdChanged();
 				}
 			}
 		}

@@ -51,6 +51,7 @@ namespace KP.Online.WCF
 
         public async Task<List<OrderSession>> GetOrderOnlineListAsync(string airport_code, int skip, int take)
         {
+
             OrderService orderSrv = new OrderService(_connStr);
             List<OrderSession> datalist = orderSrv.GetOrderOnlineList(airport_code, skip, take);
             return await Task.FromResult(datalist);
@@ -74,7 +75,6 @@ namespace KP.Online.WCF
 
             return await Task.FromResult(orderSrv.SaveOrderOnline(_posDB, order));
         }
-
 
         public async Task<OrderSession> SaveOrderOnlineAsync(OrderHeader order)
         {

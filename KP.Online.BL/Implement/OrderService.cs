@@ -249,6 +249,7 @@ namespace KP.Online.Service
                 try
                 {
                     CultureInfo ci = CultureInfo.InvariantCulture;
+                    CultureInfo ci_eng = new CultureInfo("en-US");
                     char sale_status = Char.Parse("A");
                     if (order_digit == "3")
                     {
@@ -505,7 +506,26 @@ namespace KP.Online.Service
                         _posDB.df_payment_onls.InsertOnSubmit(new_payment);
                     }
 
+                    //new contact data
+                    if (order.Billing != null)
+                    {
+                        var contact_data = new ContactData();
+                        contact_data.KeySearch = connObj.cn_branch_no.Trim() + "|" + DateTime.Now.Date.ToString("yyyy/MM/dd", ci_eng).Trim() + "|" + connObj.ref_loc_no.Trim() + "|" + connObj.ref_machine_no.Trim() + "|" + docno.ToString("00000").Trim();
+                        contact_data.CustName = order.Billing.FirstName + " " + order.Billing.LastName;
+                        contact_data.PassportNo = order.Billing.PassportNo;
+                        contact_data.OrderDate = DateTime.Now.Date;
+                        contact_data.Nation = order.Billing.CountryCode;
+                        contact_data.FlightCode = order.Flight.FlightCode;
+                        contact_data.FlightDT = Convert.ToDateTime(order.Flight.Date.Value.ToString("yyyy/MM/dd").Trim() + " " + order.Flight.Time.Time24);
+                        contact_data.PhoneNo = order.Billing.MobilePhone;
+                        contact_data.SaleStatus = Char.Parse("D"); // เพื่อให้ส่ง sms
+                        contact_data.IsCanceled = false;
+                        contact_data.AddDT = DateTime.Now;
+                        _posDB.ContactDatas.InsertOnSubmit(contact_data);
+                    }
+
                     _posDB.SubmitChanges();
+
                     tran.Complete();
                 }
                 catch (Exception ex)
@@ -570,8 +590,8 @@ namespace KP.Online.Service
             new_order_header.flight_no = order.Flight.FlightCode;
             //new_order_header.flight_
             new_order_header.reference_1 = order.Billing.BillAddress1;
-            new_order_header.reference_2 = "";
-            new_order_header.reference_3 = "";
+            new_order_header.reference_2 = order.Billing.Telephone;
+            new_order_header.reference_3 = order.Billing.MobilePhone;
             new_order_header.remark = "";
             new_order_header.create_date = DateTime.Now;
             _omDB.order_headers.InsertOnSubmit(new_order_header);
