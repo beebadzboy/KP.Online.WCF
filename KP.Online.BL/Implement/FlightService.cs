@@ -21,7 +21,7 @@ namespace KP.Online.BL
         public Flight CheckFlights(string fight_code)
         {
             var newData = new Flight();
-            var data = _db.df_flights.FirstOrDefault(x => x.flight_code == fight_code);
+            var data = _db.df_flights.FirstOrDefault(x => x.flight_code == fight_code && x.del_flag != 'X');
             if (data == null)
             {
                 throw new ObjectNotFoundException(fight_code + " not found");
@@ -54,7 +54,7 @@ namespace KP.Online.BL
             DateTime oDate = Convert.ToDateTime(fight_date);
             var week_day = oDate.DayOfWeek.ToString();
 
-            Expression<Func<df_flight, bool>> leftexp = x => x.flight_code == fight_code;
+            Expression<Func<df_flight, bool>> leftexp = x => x.flight_code == fight_code && x.del_flag != 'X';
             Expression<Func<df_flight, bool>> rightexp = x => true;
             if (week_day == "Monday")
             {
@@ -116,7 +116,7 @@ namespace KP.Online.BL
         public Flight GetDataFlights(string fight_code)
         {
             var newData = new Flight();
-            var data = _db.df_flights.FirstOrDefault(x => x.flight_code == fight_code);
+            var data = _db.df_flights.FirstOrDefault(x => x.flight_code == fight_code && x.del_flag != 'X');
             var data2 = _db.df_airlines.AsQueryable().ToList();
             string airline_substring = data.flight_code.Trim().Length > 3 ? data.flight_code.Trim().Substring(0, 3) : data.flight_code.Trim();
             var airline_data3 = data2.FirstOrDefault(x => x.airline_code.Trim() == airline_substring);
@@ -144,7 +144,7 @@ namespace KP.Online.BL
             ret.Arrival = new List<Flight>();
             ret.Departure = new List<Flight>();
             ret.Transfer = new List<Flight>();
-            var data = _db.df_flights.Where(x => x.arrdep_terminal != "L" && x.arrdep_terminal != "Y" && x.arrdep_terminal != "").AsQueryable();
+            var data = _db.df_flights.Where(x => x.arrdep_terminal != "L" && x.arrdep_terminal != "Y" && x.arrdep_terminal != "" && x.del_flag != 'X').AsQueryable();
             var data2 = _db.df_airlines.AsQueryable().ToList();
             foreach (var item in data.ToList())
             {
